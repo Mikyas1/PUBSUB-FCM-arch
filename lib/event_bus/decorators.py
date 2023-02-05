@@ -1,6 +1,9 @@
 import datetime
 
 
+# busy => I will do the thing once im done
+# or   => I will ignore the thing you send while I was busy
+
 # sync_factor should not be less than 0.05
 # used to make sure non-expired (non-request) events to register and run
 # sync_factor is used to component for the time delay between event being created and getting here

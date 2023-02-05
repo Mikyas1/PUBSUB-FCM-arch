@@ -17,7 +17,7 @@ class State:
         return self.name
 
 
-class FCM:
+class FSM:
     def __init__(self, states: List[State], rule: List[Tuple[State, State]]):
         self.states = states
         self.rule = rule
