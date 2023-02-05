@@ -9,7 +9,7 @@ import datetime
 # sync_factor is used to component for the time delay between event being created and getting here
 # Over compensation of sync_factor might result expired events (with the sync_factor - created when the
 # ** action is almost done) to register and run.
-def atomic(sync_factor=0.05):
+def atomic(sync_factor=0.05, device=None):
     sync_factor = 0.05 if sync_factor < 0.05 else sync_factor
 
     def decorator(fun):
@@ -19,7 +19,7 @@ def atomic(sync_factor=0.05):
                 fun(*args, **kwargs)
             else:
                 print()
-                print(f"Error: **atomic** Event Dropped: {args[1]}")
+                print(f"Error: **atomic** Event Dropped by '{device if device else ''}': {args[1]}")
                 print()
 
         return wrapper

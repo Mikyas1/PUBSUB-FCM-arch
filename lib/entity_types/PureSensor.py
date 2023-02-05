@@ -1,5 +1,5 @@
 from threading import Thread
-from event_bus.EventBus import EventBus
+from lib.event_bus.EventBus import EventBus
 
 
 class PureSensor:

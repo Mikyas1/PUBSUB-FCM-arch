@@ -18,11 +18,11 @@ class State:
 
 
 class FSM:
-    def __init__(self, states: List[State], rule: List[Tuple[State, State]]):
+    def __init__(self, name: str, states: List[State], rule: List[Tuple[State, State]]):
         self.states = states
         self.rule = rule
         self.state = None
-        self.name = 'FCM machine'
+        self.name = name
         self.state_lock = Lock()
         for state in self.states:
             if state.initial:
