@@ -12,15 +12,9 @@ This entites will have methods for sensing and emiting event
 ```python
 def sensing_logic(self):
         while True:
-            # data = input(f'input sensor data for {self.name}: ')
-            # todo add some sensing logic here
             current_40 = self.source.current
-            # (1.2 + 2.6) / 2 = 1.9
-            if current_40 > 1.9 and not self.previous_detected:
-                self.previous_detected = True
-                self.event_bus.publish('cylinder-detected-at-sensor-40')
-            else:
-                self.previous_detected = False
+            if current_40 > 0.5:
+                self.event_bus.publish('detected-at-sensor-40')
             time.sleep(0.3)
 ```
 
@@ -44,10 +38,6 @@ Controller entites can inherit from lib.state_machines.FSM to handle complex sta
 from lib.state_machines.FSM import State
 
 class Stopper(PureController):
-    # initial_state = State(name='Initial', initial=True)
-    # detecting_state = State(name='Detecting')
-    # passing_state = State(name='Passing')
-
     closed_state = State(name='Closed', initial=True)
     open_state = State(name='Opened')
 
@@ -59,7 +49,6 @@ class Stopper(PureController):
     states = [closed_state, open_state]
 
     def __init__(self, controller_pin=None):
-        self.controller_pin = controller_pin
         super(Stopper, self).__init__(name='stopper', states=Stopper.states, rule=Stopper.rule)
 
     @atomic(device='stopper')
@@ -74,9 +63,9 @@ Initialize the entity and call handel_events with the event sourses event bus an
 ```python
 camera = Camera(args=args)
 sensor_41 = Sensor41()
-pusher = Pusher()
-pusher.handel_events(event_handler_pairs=[
-    (camera.get_sensor_event_bus(), pusher.handel_no_cup_or_not_detected),
-    (sensor_41.get_sensor_event_bus(), pusher.handle_sensor_41_detection)
+stopper = Stopper()
+stopper.handel_events(event_handler_pairs=[
+    (camera.get_sensor_event_bus(), stopper.camara_handler),
+    (sensor_41.get_sensor_event_bus(), stopper.handle_sensor_41_detection)
 ])
 ```
