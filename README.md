@@ -1,3 +1,8 @@
+A Python implementation of multi-traded publisher-subscriber architecture with a built-in finite state machine library. Ideal to be used in complex event-driven sensor-controller applications mainly with microcontrollers like Raspberry Pi and Jetson boards.
+
+This is a core part that can be used to build your automated, IoT.... systems.
+Feel free to create pull request!!
+
 ### Create an Entity
 An entity can be a sensor, a controler or anything you want, something that can emit or receive an event.
 Create your entities under the entites folder for organazation purposes
